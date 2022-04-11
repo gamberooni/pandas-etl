@@ -1,4 +1,4 @@
-# etl-lib
+# pandas-etl
 
 Provides abstraction for pandas-based ETL. Intended for small local dataset usages.
 
@@ -34,6 +34,13 @@ Same as data sources
 5. Destination database: postgres
 
 ```python
+from pandas_etl.file_formats.csv.reader import CSVReader
+from pandas_etl.databases.sqlite3.writer import SQLite3Writer
+from pandas_etl.databases.sqlite3.reader import SQLite3Reader
+from pandas_etl.databases.postgres.writer import PostgresWriter
+from pandas_etl.etl import ETL
+
+
 def transform(df: pd.DataFrame) -> pd.DataFrame:
     """
     You could call multiple other functions in this 'transform' function, as long as it takes in
@@ -59,7 +66,7 @@ sqlite3_writer = SQLite3Writer({
 
 etl1_writer = ETL(
     reader=parquet_reader,
-    writer=mysql_writer,
+    writer=sqlite3_writer,
     transform_fn=transform
 ).execute()
 
